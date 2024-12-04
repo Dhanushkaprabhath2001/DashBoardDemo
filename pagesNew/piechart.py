@@ -11,25 +11,32 @@ dash.register_page(__name__, path='/histogrma', name="Histogram 📊")
 url = "https://raw.githubusercontent.com/Dhanushkaprabhath2001/DashBoardDemo/refs/heads/main/data/cricket_data%20(2).csv"
 df = pd.read_csv(url)
 
+####################### PIECHARTS ###############################
 
-####################### HISTOGRAM ###############################
 def create_distribution(col_name="world_cup_year"):
-    return px.histogram(data_frame=df, x=col_name, height=600)
+    # Group data by the specified column and count occurrences
+    grouped_data = df.groupby(col_name).size().reset_index(name='count') 
+    
+    # Create a pie chart using Plotly Express
+    fig = px.pie(grouped_data, values='count', names=col_name, title=f'Distribution of {col_name}')  
+    
+    return fig
 
 ####################### WIDGETS ################################
-columns = ["team_1_runs", "team_1_wickets","team_2_runs", "team_2_wickets", "world_cup_year", ]
+columns = [ "match_status","winning_team", "match_category", "world_cup_year", "host_country"]
 dd = dcc.Dropdown(id="dist_column", options=columns, value="world_cup_year", clearable=False)
+
 
 ####################### PAGE LAYOUT #############################
 layout = html.Div(children=[
     html.Br(),
     html.P("Select Column:"),
     dd,
-    dcc.Graph(id="histogram")
+    dcc.Graph(id="piechart")
    
 ])
 
 ####################### CALLBACKS ################################
-@callback(Output("histogram", "figure"), [Input("dist_column", "value"), ])
+@callback(Output("piechart", "figure"), [Input("dist_column", "value"), ])
 def update_histogram(dist_column):
     return create_distribution(dist_column)

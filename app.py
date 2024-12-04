@@ -2,7 +2,6 @@ from dash import Dash, html, dcc
 import dash
 import plotly.express as px
 
-
 px.defaults.template = "ggplot2"
 
 external_css = ["https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css", ]
@@ -16,8 +15,7 @@ app.layout = html.Div([
 	    dcc.Link(page['name'], href=page["relative_path"], className="btn btn-dark m-2 fs-5")\
 			  for page in dash.page_registry.values()]
 	),
-
-    dash.page_container
+	dash.page_container
 ], className="col-8 mx-auto")
 
 if __name__ == '__main__':

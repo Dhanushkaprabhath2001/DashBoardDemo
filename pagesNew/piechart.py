@@ -38,5 +38,5 @@ layout = html.Div(children=[
 
 ####################### CALLBACKS ################################
 @callback(Output("piechart", "figure"), [Input("dist_column", "value"), ])
-def update_histogram(dist_column):
+def update_pie(dist_column):
     return create_distribution(dist_column)

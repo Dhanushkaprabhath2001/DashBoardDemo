@@ -13,7 +13,7 @@ df = pd.read_csv(url)
 
 ####################### PIECHARTS ###############################
 
-def create_distribution(col_name="world_cup_year"):
+def create_distribution(col_name= "host_country"):
     # Group data by the specified column and count occurrences
     grouped_data = df.groupby(col_name).size().reset_index(name='count') 
     
@@ -23,7 +23,7 @@ def create_distribution(col_name="world_cup_year"):
     return fig
 
 ####################### WIDGETS ################################
-columns = [ "match_status","winning_team", "match_category", "world_cup_year", "host_country"]
+columns = [ "match_status","winning_team", "match_category", "host_country"]
 dd = dcc.Dropdown(id="dist_column", options=columns, value="world_cup_year", clearable=False)
 
 
